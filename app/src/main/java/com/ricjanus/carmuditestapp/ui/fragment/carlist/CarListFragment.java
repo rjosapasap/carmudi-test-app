@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ricjanus.carmuditestapp.R;
+import com.ricjanus.carmuditestapp.model.Car;
 import com.ricjanus.carmuditestapp.ui.adapter.CarListAdapter;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +48,11 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         carRecyclerViewAdapter = new CarListAdapter();
         carRecyclerView.setAdapter(carRecyclerViewAdapter);
 
+        presenter.takeView(this);
+        AsyncTask.execute(() ->
+                presenter.loadCars(1, 10)
+        );
+
         return view;
     }
 
@@ -58,5 +66,12 @@ public class CarListFragment extends Fragment implements CarListContract.View {
     public void onDestroy() {
         super.onDestroy();
         presenter.dropView();
+    }
+
+    @Override
+    public void showCars(List<Car> carList) {
+        getActivity().runOnUiThread(() -> {
+            Log.d("CarList", carList.toString());
+        });
     }
 }
