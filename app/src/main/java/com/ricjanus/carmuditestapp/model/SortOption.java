@@ -1,6 +1,8 @@
 package com.ricjanus.carmuditestapp.model;
 
-public enum SortOptions {
+import java.io.Serializable;
+
+public enum SortOption implements Serializable {
     OLDEST, NEWEST, PRICE_LOW, PRICE_HIGH, MILEAGE_LOW, MILEAGE_HIGH;
 
     @Override

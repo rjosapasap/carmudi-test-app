@@ -1,7 +1,7 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
 import com.ricjanus.carmuditestapp.model.Car;
-import com.ricjanus.carmuditestapp.model.SortOptions;
+import com.ricjanus.carmuditestapp.model.SortOption;
 import com.ricjanus.carmuditestapp.mvp.IBasePresenter;
 import com.ricjanus.carmuditestapp.mvp.IBaseView;
 
@@ -17,9 +17,25 @@ public interface CarListContract {
 
     interface Presenter extends IBasePresenter<View> {
 
-        void loadCars(int page, int maxItems);
+        void loadNextPage();
 
-        void loadCars(int page, int maxItems, SortOptions sortOptions);
+        void setPage(int page);
+
+        int getPage();
+
+        void setMaxItems(int maxItems);
+
+        int getMaxItems();
+
+        void setSortOption(SortOption sortOption);
+
+        SortOption getSortOption();
+
+        void resetPagination();
+
+//        void loadCars(int page, int maxItems);
+//
+//        void loadCars(int page, int maxItems, SortOption sortOptions);
 
     }
 

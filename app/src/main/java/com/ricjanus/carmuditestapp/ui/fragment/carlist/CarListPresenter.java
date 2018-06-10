@@ -1,7 +1,7 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
 import com.ricjanus.carmuditestapp.model.APIResponse;
-import com.ricjanus.carmuditestapp.model.SortOptions;
+import com.ricjanus.carmuditestapp.model.SortOption;
 import com.ricjanus.carmuditestapp.service.CarService;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -12,13 +12,22 @@ import java.util.Optional;
 
 public class CarListPresenter implements CarListContract.Presenter {
 
+    private static final int DEFAULT_MAX_ITEMS = 10;
+
     private CarListContract.View view;
 
     @Inject
     CarService carService;
 
+    private int currentPage;
+    private int maxItems;
+    private SortOption sortOption;
+
     @Inject
     public CarListPresenter() {
+        currentPage = 0;
+        maxItems = DEFAULT_MAX_ITEMS;
+        sortOption = null;
     }
 
     @Override
@@ -32,29 +41,60 @@ public class CarListPresenter implements CarListContract.Presenter {
     }
 
     @Override
-    public void loadCars(int page, int maxItems) {
+    public void loadNextPage() {
+        currentPage++;
         Optional
             .ofNullable(view)
             .ifPresent(
-                view -> {
-                    Call<APIResponse> call = carService.listCars(page, maxItems);
-                    try {
-                        Response<APIResponse> response = call.execute();
-                        if (response.isSuccessful()) {
-                            APIResponse apiResponse = response.body();
-                            if (apiResponse.isSuccess()) {
-                                view.showCars(apiResponse.getResult().getCarList());
+                    view -> {
+                        Call<APIResponse> call = carService.listCars(currentPage, maxItems);
+                        try {
+                            Response<APIResponse> response = call.execute();
+                            if (response.isSuccessful()) {
+                                APIResponse apiResponse = response.body();
+                                if (apiResponse.isSuccess()) {
+                                    view.showCars(apiResponse.getResult().getCarList());
+                                }
                             }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
-                }
-        );
+            );
     }
 
     @Override
-    public void loadCars(int page, int maxItems, SortOptions sortOptions) {
+    public void setPage(int page) {
+        currentPage = page;
+    }
 
+    @Override
+    public int getPage() {
+        return currentPage;
+    }
+
+    @Override
+    public void setMaxItems(int maxItems) {
+        this.maxItems = maxItems;
+    }
+
+    @Override
+    public int getMaxItems() {
+        return maxItems;
+    }
+
+    @Override
+    public void setSortOption(SortOption sortOption) {
+        this.sortOption = sortOption;
+    }
+
+    @Override
+    public SortOption getSortOption() {
+        return sortOption;
+    }
+
+    @Override
+    public void resetPagination() {
+        this.currentPage = 0;
     }
 }
