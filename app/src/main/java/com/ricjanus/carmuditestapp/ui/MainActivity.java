@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import com.ricjanus.carmuditestapp.R;
 import com.ricjanus.carmuditestapp.ui.fragment.carlist.CarListFragment;
 import com.ricjanus.carmuditestapp.ui.fragment.carlist.CarListPresenter;
@@ -37,4 +38,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return true;
+    }
 }

@@ -1,5 +1,7 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -56,6 +59,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
             presenter.setPage(page);
             presenter.setMaxItems(maxItems);
-            presenter.setSortOption(sortOption);
+            presenter.setSortOption(sortOption.toString());
         } else {
             carList = new ArrayList<>();
             carListAdapter = new CarListAdapter(carList, getResources().getConfiguration().orientation);
@@ -163,5 +167,36 @@ public class CarListFragment extends Fragment implements CarListContract.View {
             swipeRefreshLayout.setRefreshing(false);
             loading = false;
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort:
+                showSortSelectionDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSortSelectionDialog() {
+        String[] choices = getResources().getStringArray(R.array.sort_options);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder
+            .setTitle("Select sort option")
+            .setSingleChoiceItems(choices, -1, (dialog, i) -> {
+                sortChoiceSelected(choices[i]);
+                dialog.dismiss();
+            })
+            .create()
+            .show();
+    }
+
+    private void sortChoiceSelected(String choice) {
+        presenter.setSortOption(choice);
+        presenter.resetPagination();
+        carListAdapter.clearCarList();
+        loadMoreCars();
     }
 }

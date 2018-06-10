@@ -47,7 +47,12 @@ public class CarListPresenter implements CarListContract.Presenter {
             .ofNullable(view)
             .ifPresent(
                     view -> {
-                        Call<APIResponse> call = carService.listCars(currentPage, maxItems);
+                        Call<APIResponse> call;
+                        if (sortOption == null) {
+                            call = carService.listCars(currentPage, maxItems);
+                        } else {
+                            call = carService.listCars(currentPage, maxItems, sortOption.toString());
+                        }
                         try {
                             Response<APIResponse> response = call.execute();
                             if (response.isSuccessful()) {
@@ -84,8 +89,13 @@ public class CarListPresenter implements CarListContract.Presenter {
     }
 
     @Override
-    public void setSortOption(SortOption sortOption) {
-        this.sortOption = sortOption;
+    public void setSortOption(String sortOption) {
+        String reformattedSortOption = sortOption.toUpperCase().replace('-', '_');
+        try{
+            this.sortOption = SortOption.valueOf(reformattedSortOption);
+        }catch (IllegalArgumentException iae) {
+            this.sortOption = null;
+        }
     }
 
     @Override

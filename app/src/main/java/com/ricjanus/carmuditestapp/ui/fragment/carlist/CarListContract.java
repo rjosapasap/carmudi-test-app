@@ -27,7 +27,7 @@ public interface CarListContract {
 
         int getMaxItems();
 
-        void setSortOption(SortOption sortOption);
+        void setSortOption(String sortOption);
 
         SortOption getSortOption();
 
