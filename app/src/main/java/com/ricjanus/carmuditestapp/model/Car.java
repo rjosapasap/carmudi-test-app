@@ -1,6 +1,8 @@
 package com.ricjanus.carmuditestapp.model;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
 
     private int id;
     private String name;

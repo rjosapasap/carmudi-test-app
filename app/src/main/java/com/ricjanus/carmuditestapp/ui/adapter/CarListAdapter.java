@@ -1,30 +1,53 @@
 package com.ricjanus.carmuditestapp.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import com.ricjanus.carmuditestapp.R;
+import com.ricjanus.carmuditestapp.model.Car;
 
-public class CarListAdapter extends RecyclerView.Adapter {
+import java.util.List;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHolder> {
+
+    private List<Car> carList;
+
+    public CarListAdapter(List<Car> carList) {
+        this.carList = carList;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public CarListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_car_row, parent, false);
+        return new ViewHolder(view);
+    }
 
+    @Override
+    public void onBindViewHolder(CarListAdapter.ViewHolder holder, int position) {
+        Car car = carList.get(position);
+        View view = holder.getView();
+
+        TextView nameTextView = view.findViewById(R.id.name_text_view);
+        nameTextView.setText(car.getName());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return carList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private View view;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
+            this.view = itemView;
+        }
+
+        public View getView() {
+            return view;
         }
     }
 

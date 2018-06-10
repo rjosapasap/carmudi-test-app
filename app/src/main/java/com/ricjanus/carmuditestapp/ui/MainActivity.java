@@ -24,9 +24,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_frame, carListFragment);
-        transaction.commit();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(this);
+        System.out.println(carListFragment);
+        System.out.println(presenter);
+
+        // detect if the orientation changed
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_frame, carListFragment);
+            transaction.commit();
+        }
     }
 
 }

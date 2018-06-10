@@ -24,7 +24,7 @@ public class CarDeserializer implements JsonDeserializer<Car> {
             .get("meta")
             .getAsJsonObject();
 
-        String name = carJson.get("name").getAsString();
+        String name = carJson.get("original_name").getAsString();
         String brand = carJson.get("brand").getAsString();
         String brandModel = carJson.get("brand_model").getAsString();
         String currency = priceData.get("original_price_currency").getAsString();
