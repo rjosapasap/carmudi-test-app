@@ -1,6 +1,7 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +12,13 @@ import android.view.ViewGroup;
 
 import com.ricjanus.carmuditestapp.R;
 import com.ricjanus.carmuditestapp.ui.adapter.CarListAdapter;
-import dagger.android.DaggerFragment;
 
 import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CarListFragment extends DaggerFragment implements CarListContract.View {
+public class CarListFragment extends Fragment implements CarListContract.View {
 
     @Inject
     CarListContract.Presenter presenter;

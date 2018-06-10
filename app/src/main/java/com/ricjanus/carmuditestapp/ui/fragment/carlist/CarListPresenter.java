@@ -1,12 +1,15 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
-import com.ricjanus.carmuditestapp.di.ActivityScoped;
+import com.ricjanus.carmuditestapp.service.CarService;
 
 import javax.inject.Inject;
 
 public class CarListPresenter implements CarListContract.Presenter {
 
     private CarListContract.View view;
+
+    @Inject
+    CarService carService;
 
     @Inject
     public CarListPresenter() {

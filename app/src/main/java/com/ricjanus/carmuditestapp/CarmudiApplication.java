@@ -12,7 +12,8 @@ import javax.inject.Inject;
 public class CarmudiApplication extends Application implements HasActivityInjector {
 
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+
 
     @Override
     public void onCreate() {
@@ -22,6 +23,7 @@ public class CarmudiApplication extends Application implements HasActivityInject
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
-        return dispatchingAndroidInjector;
+        return activityDispatchingAndroidInjector;
     }
+
 }
