@@ -1,5 +1,6 @@
 package com.ricjanus.carmuditestapp.ui.adapter;
 
+import android.content.res.Configuration;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ricjanus.carmuditestapp.R;
-import com.ricjanus.carmuditestapp.io.CarmudiAppGlideModule;
 import com.ricjanus.carmuditestapp.io.GlideApp;
 import com.ricjanus.carmuditestapp.model.Car;
 
@@ -17,14 +17,21 @@ import java.util.List;
 public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHolder> {
 
     private List<Car> carList;
+    private int orientation;
 
-    public CarListAdapter(List<Car> carList) {
+    public CarListAdapter(List<Car> carList, int orientation) {
         this.carList = carList;
+        this.orientation = orientation;
     }
 
     @Override
     public CarListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_car_row, parent, false);
+        View view;
+        if (this.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_car_row_portrait, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_car_row_landscape, parent, false);
+        }
         return new ViewHolder(view);
     }
 

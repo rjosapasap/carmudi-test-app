@@ -1,5 +1,6 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -85,7 +86,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         if (savedInstanceState != null) {
             //noinspection unchecked
             carList = (ArrayList<Car>) savedInstanceState.getSerializable(CAR_LIST_BUNDLE_KEY);
-            carListAdapter = new CarListAdapter(carList);
+            carListAdapter = new CarListAdapter(carList, getResources().getConfiguration().orientation);
             Parcelable layoutManagerParcelable = savedInstanceState.getParcelable(CAR_LIST_ADAPTER_STATE_KEY);
             carRecyclerViewLayoutManager.onRestoreInstanceState(layoutManagerParcelable);
 
@@ -98,7 +99,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
             presenter.setSortOption(sortOption);
         } else {
             carList = new ArrayList<>();
-            carListAdapter = new CarListAdapter(carList);
+            carListAdapter = new CarListAdapter(carList, getResources().getConfiguration().orientation);
             doRefresh();
         }
 

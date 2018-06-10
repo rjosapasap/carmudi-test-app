@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/car_image_view"
-        android:layout_width="175dp"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
@@ -28,7 +28,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/car_image_view"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +42,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Brand"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/car_image_view"
         app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
@@ -55,7 +56,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Price"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/car_image_view"
