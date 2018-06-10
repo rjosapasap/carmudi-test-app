@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -107,6 +108,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
         DividerItemDecoration dividerItemDecoration
                 = new DividerItemDecoration(carRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.item_divider));
         carRecyclerView.addItemDecoration(dividerItemDecoration);
 
         carRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
