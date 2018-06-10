@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
     private RecyclerView carRecyclerView;
     private RecyclerView.LayoutManager carRecyclerViewLayoutManager;
     private RecyclerView.Adapter carRecyclerViewAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Car> carList;
 
     @Inject
@@ -76,10 +78,11 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         } else {
             System.out.println("NO INSTANCE STATE " + this);
             carList = new ArrayList<>();
-            AsyncTask.execute(() ->
-                    presenter.loadCars(1, 10)
-            );
+            doRefresh();
         }
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
         carRecyclerView = view.findViewById(R.id.car_list_view);
         carRecyclerView.setLayoutManager(carRecyclerViewLayoutManager);
@@ -92,6 +95,13 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         carRecyclerView.addItemDecoration(dividerItemDecoration);
 
         return view;
+    }
+
+    private void doRefresh() {
+        carList.clear();
+        AsyncTask.execute(() ->
+                presenter.loadCars(1, 10)
+        );
     }
 
     @Override
@@ -110,7 +120,8 @@ public class CarListFragment extends Fragment implements CarListContract.View {
     public void showCars(List<Car> carList) {
         getActivity().runOnUiThread(() -> {
             this.carList.addAll(carList);
-            carRecyclerViewAdapter.notifyItemInserted(carRecyclerViewAdapter.getItemCount() - 1);
+            carRecyclerViewAdapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
 }

@@ -3,6 +3,7 @@ package com.ricjanus.carmuditestapp.ui;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import com.ricjanus.carmuditestapp.R;
 import com.ricjanus.carmuditestapp.ui.fragment.carlist.CarListFragment;
 import com.ricjanus.carmuditestapp.ui.fragment.carlist.CarListPresenter;
@@ -24,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(this);
-        System.out.println(carListFragment);
-        System.out.println(presenter);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
 
         // detect if the orientation changed
         if (savedInstanceState == null) {
