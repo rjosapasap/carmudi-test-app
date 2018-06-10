@@ -36,9 +36,8 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
     private RecyclerView carRecyclerView;
     private RecyclerView.LayoutManager carRecyclerViewLayoutManager;
-    private RecyclerView.Adapter carRecyclerViewAdapter;
+    private CarListAdapter carListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private List<Car> carList;
 
     @Inject
     public CarListFragment() {
@@ -54,7 +53,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(CAR_LIST_BUNDLE_KEY, (ArrayList<Car>) carList);
+        outState.putSerializable(CAR_LIST_BUNDLE_KEY, (ArrayList<Car>) carListAdapter.getCarList());
         outState.putParcelable(CAR_LIST_ADAPTER_STATE, carRecyclerViewLayoutManager.onSaveInstanceState());
         super.onSaveInstanceState(outState);
     }
@@ -68,16 +67,17 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
         presenter.takeView(this);
 
+        List<Car> carList;
+
         if (savedInstanceState != null) {
-            System.out.println("INSTANCE STATE " + this);
             //noinspection unchecked
             carList = (ArrayList<Car>) savedInstanceState.getSerializable(CAR_LIST_BUNDLE_KEY);
+            carListAdapter = new CarListAdapter(carList);
             Parcelable layoutManagerParcelable = savedInstanceState.getParcelable(CAR_LIST_ADAPTER_STATE);
-            System.out.println("~~~~~~~~~~~~~~~" + layoutManagerParcelable.toString());
             carRecyclerViewLayoutManager.onRestoreInstanceState(layoutManagerParcelable);
         } else {
-            System.out.println("NO INSTANCE STATE " + this);
             carList = new ArrayList<>();
+            carListAdapter = new CarListAdapter(carList);
             doRefresh();
         }
 
@@ -87,8 +87,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         carRecyclerView = view.findViewById(R.id.car_list_view);
         carRecyclerView.setLayoutManager(carRecyclerViewLayoutManager);
 
-        carRecyclerViewAdapter = new CarListAdapter(carList);
-        carRecyclerView.setAdapter(carRecyclerViewAdapter);
+        carRecyclerView.setAdapter(carListAdapter);
 
         DividerItemDecoration dividerItemDecoration
                 = new DividerItemDecoration(carRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
@@ -98,7 +97,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
     }
 
     private void doRefresh() {
-        carList.clear();
+        this.carListAdapter.clearCarList();
         AsyncTask.execute(() ->
                 presenter.loadCars(1, 10)
         );
@@ -119,8 +118,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
     @Override
     public void showCars(List<Car> carList) {
         getActivity().runOnUiThread(() -> {
-            this.carList.addAll(carList);
-            carRecyclerViewAdapter.notifyDataSetChanged();
+            carListAdapter.addCars(carList);
             swipeRefreshLayout.setRefreshing(false);
         });
     }

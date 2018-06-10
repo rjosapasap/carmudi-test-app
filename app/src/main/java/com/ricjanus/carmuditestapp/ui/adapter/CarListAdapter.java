@@ -38,6 +38,20 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         return carList.size();
     }
 
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void clearCarList() {
+        this.carList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addCars(List<Car> additionalCars) {
+        this.carList.addAll(additionalCars);
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
 
