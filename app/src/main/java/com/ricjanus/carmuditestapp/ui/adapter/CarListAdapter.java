@@ -34,6 +34,8 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         View view = holder.getView();
 
         TextView nameTextView = view.findViewById(R.id.name_text_view);
+        TextView brandTextView = view.findViewById(R.id.brand_text_view);
+        TextView priceTextView = view.findViewById(R.id.price_text_view);
         ImageView carImageView = view.findViewById(R.id.car_image_view);
 
         CircularProgressDrawable progressDrawable = new CircularProgressDrawable(view.getContext());
@@ -42,12 +44,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         progressDrawable.start();
 
         GlideApp
-                .with(view)
-                .load(car.getImageURL())
-                .placeholder(progressDrawable)
-                .into(carImageView);
+            .with(view)
+            .load(car.getImageURL())
+            .placeholder(progressDrawable)
+            .into(carImageView);
 
         nameTextView.setText(car.getName());
+        brandTextView.setText(car.getCompleteBrand());
+        priceTextView.setText(car.getPriceString());
     }
 
     @Override

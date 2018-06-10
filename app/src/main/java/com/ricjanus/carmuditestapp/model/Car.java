@@ -1,6 +1,7 @@
 package com.ricjanus.carmuditestapp.model;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class Car implements Serializable {
 
@@ -66,6 +67,14 @@ public class Car implements Serializable {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getCompleteBrand() {
+        return brand + " " + brandModel;
+    }
+
+    public String getPriceString() {
+        return currency + " " + String.format(Locale.getDefault(), "%.2f", price);
     }
 
     @Override
