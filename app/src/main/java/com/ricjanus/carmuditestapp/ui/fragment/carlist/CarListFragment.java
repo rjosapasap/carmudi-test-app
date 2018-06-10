@@ -1,6 +1,5 @@
 package com.ricjanus.carmuditestapp.ui.fragment.carlist;
 
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -24,9 +23,6 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CarListFragment extends Fragment implements CarListContract.View {
 
     private static final String CAR_LIST_BUNDLE_KEY = "com.ricjanus.car_list_key";

@@ -1,11 +1,15 @@
 package com.ricjanus.carmuditestapp.ui.adapter;
 
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.ricjanus.carmuditestapp.R;
+import com.ricjanus.carmuditestapp.io.CarmudiAppGlideModule;
+import com.ricjanus.carmuditestapp.io.GlideApp;
 import com.ricjanus.carmuditestapp.model.Car;
 
 import java.util.List;
@@ -30,6 +34,19 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         View view = holder.getView();
 
         TextView nameTextView = view.findViewById(R.id.name_text_view);
+        ImageView carImageView = view.findViewById(R.id.car_image_view);
+
+        CircularProgressDrawable progressDrawable = new CircularProgressDrawable(view.getContext());
+        progressDrawable.setStrokeWidth(5);
+        progressDrawable.setCenterRadius(30);
+        progressDrawable.start();
+
+        GlideApp
+                .with(view)
+                .load(car.getImageURL())
+                .placeholder(progressDrawable)
+                .into(carImageView);
+
         nameTextView.setText(car.getName());
     }
 
