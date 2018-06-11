@@ -12,10 +12,12 @@ public class CarDeserializer implements JsonDeserializer<Car> {
         JsonObject carJson = json.getAsJsonObject().get("data").getAsJsonObject();
         JsonArray imagesArray = json.getAsJsonObject().get("images").getAsJsonArray();
 
+        // get sku to retrieve price
         String sku = carJson.get("sku").getAsString();
 
         Car car = gson.fromJson(carJson, typeOfT);
 
+        // Get price data object in key simples-sku-meta
         JsonObject priceData = carJson
             .get("simples")
             .getAsJsonObject()
@@ -31,6 +33,8 @@ public class CarDeserializer implements JsonDeserializer<Car> {
         double price = priceData.get("price").getAsDouble();
         String imageURL = imagesArray.get(0).getAsJsonObject().get("url").getAsString();
 
+
+        // set car details
         car.setName(name);
         car.setBrand(brand);
         car.setBrandModel(brandModel);

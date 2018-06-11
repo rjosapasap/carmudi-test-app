@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
+// REST Service calls - via Retrofit
 public interface CarService {
 
     @GET("/api/cars/page:{page}/maxitems:{itemCount}/")

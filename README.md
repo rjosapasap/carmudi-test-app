@@ -13,7 +13,7 @@
 
 ## Developer Notes
 
-*IDE used is Intellij IDEA Ultimate
+IDE used is Intellij IDEA Ultimate
 
 Third-party libraries used:
 * Dagger2

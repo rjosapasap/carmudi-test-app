@@ -7,6 +7,7 @@ import com.ricjanus.carmuditestapp.mvp.IBaseView;
 
 import java.util.List;
 
+// MVP - Contract for CarList
 public interface CarListContract {
 
     interface View extends IBaseView<Presenter> {

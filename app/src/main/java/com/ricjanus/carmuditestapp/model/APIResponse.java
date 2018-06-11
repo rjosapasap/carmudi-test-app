@@ -2,6 +2,7 @@ package com.ricjanus.carmuditestapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+// Model for wrapping whole web service response
 public class APIResponse {
 
     private boolean success;

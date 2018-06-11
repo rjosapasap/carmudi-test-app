@@ -64,6 +64,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        // save fragment state
         outState.putSerializable(CAR_LIST_BUNDLE_KEY, (ArrayList<Car>) carListAdapter.getCarList());
         outState.putParcelable(CAR_LIST_ADAPTER_STATE_KEY, carRecyclerViewLayoutManager.onSaveInstanceState());
         outState.putInt(CAR_LIST_PAGE_KEY, presenter.getPage());
@@ -83,11 +84,15 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         carRecyclerViewLayoutManager = new LinearLayoutManager(getContext());
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        // add action when refresh is triggered
         swipeRefreshLayout.setOnRefreshListener(this::doRefresh);
 
         List<Car> carList;
 
+        // check if there is a saved instance
         if (savedInstanceState != null) {
+            // retrieve saved instance data, used to preserve scroll position and car list data
+
             //noinspection unchecked
             carList = (ArrayList<Car>) savedInstanceState.getSerializable(CAR_LIST_BUNDLE_KEY);
             carListAdapter = new CarListAdapter(carList, getResources().getConfiguration().orientation);
@@ -102,6 +107,7 @@ public class CarListFragment extends Fragment implements CarListContract.View {
             presenter.setMaxItems(maxItems);
             presenter.setSortOption(sortOption.toString());
         } else {
+            // no saved instance state, start from empty list
             carList = new ArrayList<>();
             carListAdapter = new CarListAdapter(carList, getResources().getConfiguration().orientation);
             doRefresh();
@@ -111,11 +117,13 @@ public class CarListFragment extends Fragment implements CarListContract.View {
         carRecyclerView.setLayoutManager(carRecyclerViewLayoutManager);
         carRecyclerView.setAdapter(carListAdapter);
 
+        // add divider to recycler view
         DividerItemDecoration dividerItemDecoration
                 = new DividerItemDecoration(carRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.item_divider));
         carRecyclerView.addItemDecoration(dividerItemDecoration);
 
+        // infinite scrolling
         carRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

@@ -43,11 +43,14 @@ public class CarListPresenter implements CarListContract.Presenter {
     @Override
     public void loadNextPage() {
         currentPage++;
+
+        // only load next page if view is not null
         Optional
             .ofNullable(view)
             .ifPresent(
                     view -> {
                         Call<APIResponse> call;
+                        // call depends if there is a sort option selected
                         if (sortOption == null) {
                             call = carService.listCars(currentPage, maxItems);
                         } else {
@@ -58,6 +61,7 @@ public class CarListPresenter implements CarListContract.Presenter {
                             if (response.isSuccessful()) {
                                 APIResponse apiResponse = response.body();
                                 if (apiResponse.isSuccess()) {
+                                    // call view to display cars
                                     view.showCars(apiResponse.getResult().getCarList());
                                 }
                             }
@@ -90,6 +94,7 @@ public class CarListPresenter implements CarListContract.Presenter {
 
     @Override
     public void setSortOption(String sortOption) {
+        // Retrieve enum from sort option string
         String reformattedSortOption = sortOption.toUpperCase().replace('-', '_');
         try{
             this.sortOption = SortOption.valueOf(reformattedSortOption);

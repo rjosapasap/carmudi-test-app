@@ -27,6 +27,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     @Override
     public CarListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+        // layout file used depends on orientation
         if (this.orientation == Configuration.ORIENTATION_PORTRAIT) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_car_row_portrait, parent, false);
         } else {
@@ -45,6 +46,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         TextView priceTextView = view.findViewById(R.id.price_text_view);
         ImageView carImageView = view.findViewById(R.id.car_image_view);
 
+        // add loading animation while image is loading
         CircularProgressDrawable progressDrawable = new CircularProgressDrawable(view.getContext());
         progressDrawable.setStrokeWidth(5);
         progressDrawable.setCenterRadius(30);

@@ -26,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set toolbar title
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
-        // detect if the orientation changed
+        // detect if the orientation changed, if so retain original fragment
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.add(R.id.fragment_frame, carListFragment);
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // add sort action to toolbar
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         return true;
     }
