@@ -27,6 +27,7 @@ import dagger.android.AndroidInjection;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CarListFragment extends Fragment implements CarListContract.View {
 
@@ -105,7 +106,9 @@ public class CarListFragment extends Fragment implements CarListContract.View {
 
             presenter.setPage(page);
             presenter.setMaxItems(maxItems);
-            presenter.setSortOption(sortOption.toString());
+            Optional
+                    .ofNullable(sortOption)
+                    .ifPresent(sortOption1 -> presenter.setSortOption(sortOption.toString()));
         } else {
             // no saved instance state, start from empty list
             carList = new ArrayList<>();
